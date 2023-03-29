@@ -1,27 +1,27 @@
 package me.whiteship.chapter05.item28.array_to_list;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Chooser<T> {
-    private final List<T> choiceList;
+public class ChooserGeneric<T> {
 
-    public Chooser(Collection<T> choices) {
-        this.choiceList = new ArrayList<>(choices);
+    private final T[] choiceList;
+
+    public ChooserGeneric(Collection choices) {
+        this.choiceList = (T[]) choices.toArray();
     }
 
     public T choose() {
         Random rnd = ThreadLocalRandom.current();
-        return choiceList.get(rnd.nextInt(choiceList.size()));
+        return choiceList[rnd.nextInt(choiceList.length)];
     }
 
     public static void main(String[] args) {
         List<Integer> intList = List.of(1, 2, 3, 4, 5, 6);
 
-        Chooser<Integer> chooser = new Chooser(intList);
+        ChooserGeneric<Integer> chooser = new ChooserGeneric(intList);
 
         for (int i = 0; i < 10; i++) {
             Number choice = chooser.choose();
