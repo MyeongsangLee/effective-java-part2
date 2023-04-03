@@ -1,29 +1,31 @@
-package me.whiteship.chapter05.item29.bounded_type;
+package me.whiteship.chapter05.item29.technique2;
 
 import java.util.Arrays;
 import java.util.EmptyStackException;
 import java.util.List;
 
-public class Stack<E extends Number> {
-    private Number[] elements;
+public class Stack<E> {
+    private Object[] elements;
     private int size = 0;
+
     private static final int DEFAULT_INITIAL_CAPACITY = 16;
 
     public Stack() {
-
-        this.elements = (E[]) new Number[DEFAULT_INITIAL_CAPACITY];
+        this.elements = new Object[DEFAULT_INITIAL_CAPACITY];
     }
 
     public void push(E e) {
-        ensureCapacity();
         elements[size++] = e;
+        ensureCapacity();
     }
 
     public E pop() {
         if (size == 0)
             throw new EmptyStackException();
+
+        @SuppressWarnings("unchecked")
         E result = (E) elements[--size];
-        this.elements[size] = null;
+        elements[size] = null;
         return result;
     }
 
@@ -32,17 +34,16 @@ public class Stack<E extends Number> {
     }
 
     private void ensureCapacity() {
-        if (elements.length == size) {
-            this.elements = Arrays.copyOf(elements, 2 * size + 1);
-        }
+        if (elements.length == size)
+            elements = Arrays.copyOf(elements, 2 * size + 1);
     }
 
-    // 코드 29-5 제네릭 Stack을 사용하는 맛보기 프로그램 (174쪽)
     public static void main(String[] args) {
-        Stack<Integer> stack = new Stack<>();
-        for (Integer arg : List.of(1, 2, 3))
+        Stack<String> stack = new Stack();
+        for (String arg : List.of("a", "b", "c"))
             stack.push(arg);
         while (!stack.isEmpty())
-            System.out.println(stack.pop());
+            System.out.println((stack.pop()).toUpperCase());
     }
+
 }
