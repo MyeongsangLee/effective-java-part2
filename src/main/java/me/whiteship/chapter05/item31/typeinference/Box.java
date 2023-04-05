@@ -1,27 +1,15 @@
-package me.whiteship.chapter05.item31.example;
+package me.whiteship.chapter05.item31.typeinference;
 
 
-public class Box <T extends Comparable<T>> implements Comparable<Box<T>>  {
+public class Box<T>  {
 
-    protected T value;
+    private T t;
 
-    public Box(T value) {
-        this.value = value;
+    public T get() {
+        return t;
     }
 
-    public void change(T value) {
-        this.value = value;
-    }
-
-    @Override
-    public int compareTo(Box<T> o) {
-        return this.value.compareTo((T)o.value);
-    }
-
-    @Override
-    public String toString() {
-        return "Box{" +
-                "value=" + value +
-                '}';
+    public <E extends T>void set(E e) {
+        this.t = e;
     }
 }

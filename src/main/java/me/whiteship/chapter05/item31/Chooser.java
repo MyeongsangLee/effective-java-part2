@@ -1,4 +1,4 @@
-package me.whiteship.chapter05.item28.array_to_list;
+package me.whiteship.chapter05.item31;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,7 +9,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Chooser<T> {
     private final List<T> choiceList;
 
-    public Chooser(Collection<T> choices) {
+    public Chooser(Collection<? extends T> choices) {
         this.choiceList = new ArrayList<>(choices);
     }
 
@@ -19,9 +19,10 @@ public class Chooser<T> {
     }
 
     public static void main(String[] args) {
-        List<Integer> intList = List.of(1, 2, 3, 4, 5, 6);
+        //List<Integer> lists = List.of(1, 2, 3, 4, 5, 6);
+        List<Double> lists = List.of(1.1, 2.1, 3.2, 4.5, 5.6, 6.7);
 
-        Chooser<Integer> chooser = new Chooser(intList);
+        Chooser<Number> chooser = new Chooser(lists);
 
         for (int i = 0; i < 10; i++) {
             Number choice = chooser.choose();

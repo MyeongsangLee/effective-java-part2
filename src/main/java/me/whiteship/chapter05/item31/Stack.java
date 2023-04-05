@@ -32,7 +32,7 @@ public class Stack<E> {
 
     private void ensureCapacity() {
         if (elements.length == size) {
-            Arrays.copyOf(elements, 2 * size + 1);
+            elements = Arrays.copyOf(elements, 2 * size + 1);
         }
     }
 
